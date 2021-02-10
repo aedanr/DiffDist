@@ -1,4 +1,6 @@
 # DiffDist
+https://doi.org/10.5281/zenodo.8475
+
 A hierarchical model for RNA-seq data based on the negative binomial distribution, with tests for differential expression, dispersion and distribution. Inference is via an adaptive Markov chain Monte Carlo sampling procedure.
 
 Between-group differences in posterior samples are used to create tail probabilities for differential expression and dispersion based on highest posterior density intervals. Differential expression and dipsersion can be tested for a given minimum log2 fold change.
