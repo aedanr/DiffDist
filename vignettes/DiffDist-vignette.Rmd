@@ -23,7 +23,7 @@ library(DiffDist)
 library(compcodeR)
 ```
 
-`DiffDist` currently takes a count matrix with samples in rows and genes in columns, the opposite of the usual convention. This will be fixed in later updates, but for now count matrices need to be transposed relative to the usual format.
+DiffDist currently takes a count matrix with samples in rows and genes in columns, the opposite of the usual convention. This will be fixed in later updates, but for now count matrices need to be transposed relative to the usual format.
 ```{r}
 dat <-  generateSyntheticData('data', n.vars=100, samples.per.cond=5, n.diffexp=10)
 # 100 genes, 5 samples per group, differential expression for first 10 genes
@@ -47,8 +47,10 @@ Given a posterior sample of LFC, `hpd.pval()` computes a tail probability of dif
 ```{r}
 p.mean <- apply(mean.diff, 2, hpd.pval) # Tests for differential expression
 p.disp <- apply(disp.diff, 2, hpd.pval) # Tests for differential dispersion
-p.mean.lfc1 <- apply(mean.diff, 2, hpd.pval, m=1) # Tests for differential expression at minimum LFC 1
-p.disp.lfc1 <- apply(disp.diff, 2, hpd.pval, m=1) # Tests for differential dispersion at minimum LFC 1
+p.mean.lfc1 <- apply(mean.diff, 2, hpd.pval, m=1)
+# Tests for differential expression at minimum LFC 1
+p.disp.lfc1 <- apply(disp.diff, 2, hpd.pval, m=1)
+# Tests for differential dispersion at minimum LFC 1
 ```
 It has been found in practice that applying false discovery rate control procedures on (1 -- posterior tail probabilities) works well to set a threshold for declaring a gene as differentially expressed or dispersed.
 
@@ -65,5 +67,6 @@ bfdr.HMM <- bfdr(prob)
 # Posterior threshold method:
 proportion <- mean(as.matrix(res$proportion)) 
 threshold <- sort(prob, decreasing=T)[round(nrow(dat@count.matrix) * proportion)]
-# Genes with a posterior probability > threshold are declared as differentially distributed.
+# Genes with a posterior probability > threshold are declared as differentially 
+# distributed.
 ```
