@@ -12,3 +12,5 @@ Normalisation of RNA-seq counts is not performed as part of this procedure -- no
 `lognormal_hmm_adaptive_proposals_three_chains_function` contains the main function to run the MCMC algorithm. This function calls the separate functions contained in `lognormal_hmm_three_chains_function` and `lognormal_hmm_one_chain_function`, which rely on the functions in `conditional_posterior_functions_lognormal_hmm`.
 
 `methods_comparisons` contains code used to run the DiffDist tests, along with code used to run comparative assessments against other differential expression, dispersion and distribution methods. The code for the hierarchical model tests here also serves as an example of how to use the output of the MCMC algorithm to perform each test.
+
+Install using `devtools::install_github("aedanr/DiffDist")`.
