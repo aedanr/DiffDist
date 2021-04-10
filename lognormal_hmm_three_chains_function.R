@@ -5,24 +5,24 @@ ln_hmm_3_chains <- function(counts,
                             inits1, 
                             inits2, 
                             inits3, 
-                            mean.proposal.scales0=rep(0.2, ncol(counts)), 
-                            mean.proposal.scales1=rep(0.2, ncol(counts)), 
-                            mean.proposal.scales2=rep(0.2, ncol(counts)), 
-                            disp.proposal.scales0=rep(0.5, ncol(counts)), 
-                            disp.proposal.scales1=rep(0.5, ncol(counts)), 
-                            disp.proposal.scales2=rep(0.5, ncol(counts)), 
+                            mean.proposal.scales0=rep(0.2, nrow(counts)), 
+                            mean.proposal.scales1=rep(0.2, nrow(counts)), 
+                            mean.proposal.scales2=rep(0.2, nrow(counts)), 
+                            disp.proposal.scales0=rep(0.5, nrow(counts)), 
+                            disp.proposal.scales1=rep(0.5, nrow(counts)), 
+                            disp.proposal.scales2=rep(0.5, nrow(counts)), 
                             mean.prior.scale.proposal.sd=0.1, 
                             disp.prior.scale.proposal.sd=0.4) {
   
-  genes <- ncol(counts)
-  counts1 <- counts[groups==1,]
-  counts2 <- counts[groups==2,]
-  samples0 <- nrow(counts)
-  samples1 <- nrow(counts1)
-  samples2 <- nrow(counts2)
-  sample.means0 <- colMeans(counts)
-  sample.means1 <- colMeans(counts1)
-  sample.means2 <- colMeans(counts2)
+  genes <- nrow(counts)
+  counts1 <- counts[,groups==1]
+  counts2 <- counts[,groups==2]
+  samples0 <- ncol(counts)
+  samples1 <- ncol(counts1)
+  samples2 <- ncol(counts2)
+  sample.means0 <- rowMeans(counts)
+  sample.means1 <- rowMeans(counts1)
+  sample.means2 <- rowMeans(counts2)
   sqrt.mean.proposal.scales0 <- sqrt(mean.proposal.scales0)
   sqrt.mean.proposal.scales1 <- sqrt(mean.proposal.scales1)
   sqrt.mean.proposal.scales2 <- sqrt(mean.proposal.scales2)

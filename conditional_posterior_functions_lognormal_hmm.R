@@ -34,7 +34,7 @@ disp.conditional.log.posterior = function(genes,
   x <- 1/disps
   out <- rep(-1e20,genes)
   index <- which(disps>0)
-  lgammasum <- colSums(lgamma(counts + rep(x, each = nrow(counts))))
+  lgammasum <- rowSums(lgamma(counts + rep(x, ncol(counts))))
   out[index] <- 
     lgammasum[index] - 
     n * lgamma(x[index]) - 
@@ -136,7 +136,7 @@ pz0 <- function(genes,
                 disp.prior.scale, 
                 lambda) {
   x <- 1/disps
-  lgammasum <- colSums(lgamma(counts + rep(x, each = nrow(counts))))
+  lgammasum <- rowSums(lgamma(counts + rep(x, ncol(counts))))
   return(lgammasum - 
            n * lgamma(x) - 
            n * (sample.means + x) * log(1 + means * disps) + 
@@ -171,8 +171,8 @@ pz1 = function(genes,
                lambda) {
   x1 <- 1/disps1
   x2 <- 1/disps2
-  lgammasum1 <- colSums(lgamma(counts1 + rep(x1, each = nrow(counts1))))
-  lgammasum2 <- colSums(lgamma(counts2 + rep(x2, each = nrow(counts2))))
+  lgammasum1 <- rowSums(lgamma(counts1 + rep(x1, ncol(counts1))))
+  lgammasum2 <- rowSums(lgamma(counts2 + rep(x2, ncol(counts2))))
   return(lgammasum1 - 
            n1 * lgamma(x1) - 
            n1 * (sample.means1 + x1) * log(1 + means1 * disps1) + 

@@ -5,18 +5,18 @@ ln_hmm_adapt_3_chains <- function(counts,
                                   adapt.chain.length=100) {
   
   require(coda)
-  genes <- ncol(counts)
-  counts1 <- counts[groups==1,]
-  counts2 <- counts[groups==2,]
-  samples0 <- nrow(counts)
-  samples1 <- nrow(counts1)
-  samples2 <- nrow(counts2)
-  sample.means0 <- pmax(colMeans(counts), 0.01)
-  sample.means1 <- pmax(colMeans(counts1), 0.01)
-  sample.means2 <- pmax(colMeans(counts2), 0.01)
-  sample.vars0 <- apply(counts, 2, var)
-  sample.vars1 <- apply(counts1, 2, var)
-  sample.vars2 <- apply(counts2, 2, var)
+  genes <- nrow(counts)
+  counts1 <- counts[,groups==1]
+  counts2 <- counts[,groups==2]
+  samples0 <- ncol(counts)
+  samples1 <- ncol(counts1)
+  samples2 <- ncol(counts2)
+  sample.means0 <- pmax(rowMeans(counts), 0.01)
+  sample.means1 <- pmax(rowMeans(counts1), 0.01)
+  sample.means2 <- pmax(rowMeans(counts2), 0.01)
+  sample.vars0 <- apply(counts, 1, var)
+  sample.vars1 <- apply(counts1, 1, var)
+  sample.vars2 <- apply(counts2, 1, var)
   rm(counts1, counts2)
   sample.disps0 <- pmax(sample.vars0-sample.means0, 0.01) / pmax(sample.means0^2, 0.1)
   sample.disps1 <- pmax(sample.vars1-sample.means1, 0.01) / pmax(sample.means1^2, 0.1)
@@ -40,12 +40,12 @@ ln_hmm_adapt_3_chains <- function(counts,
                "disp.prior.location" = 1, 
                "mean.prior.scale" = 1, 
                "disp.prior.scale" = 1), 
-    mean.proposal.scales0=rep(0.2, ncol(counts)), 
-    mean.proposal.scales1=rep(0.2, ncol(counts)), 
-    mean.proposal.scales2=rep(0.2, ncol(counts)), 
-    disp.proposal.scales0=rep(0.5, ncol(counts)), 
-    disp.proposal.scales1=rep(0.5, ncol(counts)), 
-    disp.proposal.scales2=rep(0.5, ncol(counts)), 
+    mean.proposal.scales0=rep(0.2, nrow(counts)), 
+    mean.proposal.scales1=rep(0.2, nrow(counts)), 
+    mean.proposal.scales2=rep(0.2, nrow(counts)), 
+    disp.proposal.scales0=rep(0.5, nrow(counts)), 
+    disp.proposal.scales1=rep(0.5, nrow(counts)), 
+    disp.proposal.scales2=rep(0.5, nrow(counts)), 
     mean.prior.scale.proposal.sd=0.1, 
     disp.prior.scale.proposal.sd=0.4
   )
