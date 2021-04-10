@@ -7,7 +7,7 @@ Between-group differences in posterior samples are used to create tail probabili
 
 Differential distribution test is via a mixture model. Inference is based on posterior samples of the relative probability of belonging to each of two mixture components: differential distribution (mean and/or dispersion differs between groups) or no differential distribution (mean and dispersion are the same in both groups). A posterior probability threshold for calling a gene as differentially distributed can be set using a Bayesian false discovery rate control procedure or by using a posterior estimate of the proportion of genes in the sample that are differentially distributed.
 
-Normalisation of RNA-seq counts is not performed as part of this procedure -- normalised counts must be provided. The functions take count matrices with samples in rows and genes in columns -- i.e. the opposite of the conventional format. This will be fixed at some point, but for now count matrices need to be transformed relative to the usual format.
+Normalisation of RNA-seq counts is not performed as part of this procedure - normalised counts must be provided.
 
 `lognormal_hmm_adaptive_proposals_three_chains_function` contains the main function to run the MCMC algorithm. This function calls the separate functions contained in `lognormal_hmm_three_chains_function` and `lognormal_hmm_one_chain_function`, which rely on the functions in `conditional_posterior_functions_lognormal_hmm`.
 
