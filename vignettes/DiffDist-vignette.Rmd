@@ -16,19 +16,25 @@ knitr::opts_chunk$set(
 
 DiffDist uses a hierarchical model based on the negative binomial distribution to perform tests of differential expression, dispersion and distribution for RNA-seq data. An adaptive Markov chain Monte Carlo (MCMC) algorithm is used to obtain posterior samples for each parameter of interest, and these samples are used to test for differences between groups in either the mean or dispersion parameters separately, or an overall test of differential distribution -- a difference in either parameter for a given gene.
 
-The main function to run the MCMC algorithm is `ln_hmm_adapt_3_chains()`. The output is a list containing `mcmc.list` objects (from the `coda` package) for each parameter from the hierarchical model. Below is an example showing how to use the output to perform tests of differential expression, dispersion and distribution. Data for the example is generated using the `compcodeR` package.
+The main function to run the MCMC algorithm is `ln_hmm_adapt_3_chains()`. The output is a list containing `mcmc.list` objects (from the `coda` package) for each parameter from the hierarchical model. Below is an example showing how to use the output to perform tests of differential expression, dispersion and distribution. Data for the example is generated using the `compcodeR` package. DiffDist does not perform normalisation. Normalised counts must be provided. In this example, we generate normalisation factors using the TMM method incorporated in edgeR, and use those to generate normalised counts.
 
 ```{r setup, message=F, warning=F}
 library(DiffDist)
 library(compcodeR)
+library(edgeR)
 ```
 
-DiffDist currently takes a count matrix with samples in rows and genes in columns, the opposite of the usual convention. This will be fixed in later updates, but for now count matrices need to be transposed relative to the usual format.
 ```{r}
 dat <-  generateSyntheticData('data', n.vars=100, samples.per.cond=5, n.diffexp=10)
 # 100 genes, 5 samples per group, differential expression for first 10 genes
 
-res <- ln_hmm_adapt_3_chains(counts=t(dat@count.matrix), 
+libsizes <- colSums(dat@count.matrix) # library sizes
+nf <- calcNormFactors(dat@count.matrix, method="TMM") # generate normalisation factors
+els <- nf * libsizes # effective library sizes
+sf <- els / exp(mean(log(libsizes))) # generate 'size factors' from effective library sizes
+norm.counts <- t(t(dat@count.matrix) / sf) # divide raw counts by size factors
+
+res <- ln_hmm_adapt_3_chains(counts=norm.counts, 
                              groups=dat@sample.annotations$condition)
 ```
 
