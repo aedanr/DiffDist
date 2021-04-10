@@ -32,9 +32,7 @@ posterior.indicator.probabilities(
 \arguments{
 \item{genes}{Number of genes}
 
-\item{counts0}{Overall count matrix with samples in rows and genes in columns. This
-will be fixed in future versions to follow the convention of genes in rows and
-samples in columns.}
+\item{counts0}{Overall count matrix with genes in rows and samples in columns}
 
 \item{counts1}{Matrix of counts in group 1}
 

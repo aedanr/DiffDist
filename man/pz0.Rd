@@ -22,9 +22,7 @@ pz0(
 \arguments{
 \item{genes}{Number of genes}
 
-\item{counts}{Matrix of counts with samples in rows and genes in columns. This will
-be fixed in future versions to follow the convention of genes in rows and samples
-in columns.}
+\item{counts}{Matrix of counts with genes in rows and samples in columns}
 
 \item{n}{Number of samples}
 

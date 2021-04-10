@@ -10,20 +10,18 @@ ln_hmm_1_chain(
   chain.length,
   thin = 1,
   inits,
-  mean.proposal.scales0 = rep(0.2, ncol(counts)),
-  mean.proposal.scales1 = rep(0.2, ncol(counts)),
-  mean.proposal.scales2 = rep(0.2, ncol(counts)),
-  disp.proposal.scales0 = rep(0.5, ncol(counts)),
-  disp.proposal.scales1 = rep(0.5, ncol(counts)),
-  disp.proposal.scales2 = rep(0.5, ncol(counts)),
+  mean.proposal.scales0 = rep(0.2, nrow(counts)),
+  mean.proposal.scales1 = rep(0.2, nrow(counts)),
+  mean.proposal.scales2 = rep(0.2, nrow(counts)),
+  disp.proposal.scales0 = rep(0.5, nrow(counts)),
+  disp.proposal.scales1 = rep(0.5, nrow(counts)),
+  disp.proposal.scales2 = rep(0.5, nrow(counts)),
   mean.prior.scale.proposal.sd = 0.1,
   disp.prior.scale.proposal.sd = 0.4
 )
 }
 \arguments{
-\item{counts}{Matrix of counts with samples in rows and genes in columns. This will
-be fixed in future versions to follow the convention of genes in rows and samples
-in columns.}
+\item{counts}{Matrix of counts with genes in rows and samples in columns}
 
 \item{groups}{Factor indication group membership (1 or 2)}
 

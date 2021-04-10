@@ -27,9 +27,7 @@ pz1(
 \arguments{
 \item{genes}{Number of genes}
 
-\item{counts1}{Matrix of counts in group 1. Samples in rows and genes in columns.
-This will be fixed in future versions to follow the convention of genes in rows and
-samples in columns.}
+\item{counts1}{Matrix of counts in group 1 with genes in rows and samples in columns}
 
 \item{counts2}{Matrix of counts in group 2}
 

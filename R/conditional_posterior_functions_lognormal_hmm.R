@@ -31,9 +31,7 @@ mean.conditional.log.posterior <- function(n,
 
 #' Per-gene conditional log posterior dispersion function. Called by MCMC functions.
 #' @param genes Number of genes
-#' @param counts Matrix of counts with samples in rows and genes in columns. This will
-#' be fixed in future versions to follow the convention of genes in rows and samples
-#' in columns.
+#' @param counts Matrix of counts with genes in rows and samples in columns
 #' @param n Number of samples
 #' @param sample.means Vector of per-gene sample means
 #' @param means Vector of current per-gene mean estimates
@@ -53,7 +51,7 @@ disp.conditional.log.posterior = function(genes,
   x <- 1/disps
   out <- rep(-1e20,genes)
   index <- which(disps>0)
-  lgammasum <- colSums(lgamma(counts + rep(x, each = nrow(counts))))
+  lgammasum <- rowSums(lgamma(counts + rep(x, ncol(counts))))
   out[index] <-
     lgammasum[index] -
     n * lgamma(x[index]) -
@@ -178,9 +176,7 @@ disp.prior.scale.log.posterior <- function(prior.scale,
 #' Function for raw conditional log posterior probability of no differential
 #' distribution. Called by \code{posterior.indicator.probabilities()}.
 #' @param genes Number of genes
-#' @param counts Matrix of counts with samples in rows and genes in columns. This will
-#' be fixed in future versions to follow the convention of genes in rows and samples
-#' in columns.
+#' @param counts Matrix of counts with genes in rows and samples in columns
 #' @param n Number of samples
 #' @param sample.means Vector of per-gene sample means
 #' @param means Vector of current per-gene mean estimates
@@ -205,7 +201,7 @@ pz0 <- function(genes,
                 disp.prior.scale,
                 lambda) {
   x <- 1/disps
-  lgammasum <- colSums(lgamma(counts + rep(x, each = nrow(counts))))
+  lgammasum <- rowSums(lgamma(counts + rep(x, ncol(counts))))
   return(lgammasum -
            n * lgamma(x) -
            n * (sample.means + x) * log(1 + means * disps) +
@@ -222,9 +218,7 @@ pz0 <- function(genes,
 #' Function for raw conditional log posterior probability of differential
 #' distribution. Called by \code{posterior.indicator.probabilities()}.
 #' @param genes Number of genes
-#' @param counts1 Matrix of counts in group 1. Samples in rows and genes in columns.
-#' This will be fixed in future versions to follow the convention of genes in rows and
-#' samples in columns.
+#' @param counts1 Matrix of counts in group 1 with genes in rows and samples in columns
 #' @param counts2 Matrix of counts in group 2
 #' @param n1 Number of samples in group 1
 #' @param n2 Number of samples in group 2
@@ -260,8 +254,8 @@ pz1 = function(genes,
                lambda) {
   x1 <- 1/disps1
   x2 <- 1/disps2
-  lgammasum1 <- colSums(lgamma(counts1 + rep(x1, each = nrow(counts1))))
-  lgammasum2 <- colSums(lgamma(counts2 + rep(x2, each = nrow(counts2))))
+  lgammasum1 <- rowSums(lgamma(counts1 + rep(x1, ncol(counts1))))
+  lgammasum2 <- rowSums(lgamma(counts2 + rep(x2, ncol(counts2))))
   return(lgammasum1 -
            n1 * lgamma(x1) -
            n1 * (sample.means1 + x1) * log(1 + means1 * disps1) +
@@ -281,9 +275,7 @@ pz1 = function(genes,
 #' Function for posterior probability of differential distribution. Called by MCMC
 #' functions.
 #' @param genes Number of genes
-#' @param counts0 Overall count matrix with samples in rows and genes in columns. This
-#' will be fixed in future versions to follow the convention of genes in rows and
-#' samples in columns.
+#' @param counts0 Overall count matrix with genes in rows and samples in columns
 #' @param counts1 Matrix of counts in group 1
 #' @param counts2 Matrix of counts in group 2
 #' @param n Total number of samples
